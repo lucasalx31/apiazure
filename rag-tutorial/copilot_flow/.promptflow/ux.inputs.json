@@ -1,0 +1,56 @@
+{
+  "chat_list": [
+    {
+      "name": "default",
+      "inputs": {
+        "chat_history": [
+          {
+            "role": "user",
+            "content": "cargo - Motorista: como calcular a rescisão?"
+          },
+          {
+            "role": "assistant",
+            "content": "Desculpe, mas para responder a essa pergunta eu preciso de mais informações. Qual é o tipo de rescisão que você está lidando? É uma rescisão por iniciativa da empresa, por pedido de demissão, por fim de contrato de trabalho no prazo, por morte ou por outra razão? Lembre-se de que é importante fornecer informações específicas para que eu possa ajudá-lo melhor."
+          },
+          {
+            "role": "user",
+            "content": "cargo - Motorista: pedido de demisão"
+          },
+          {
+            "role": "assistant",
+            "content": "Para calcular a rescisão de um colaborador que pediu demissão, siga os passos abaixo:\n\n1. Acesse o sistema Rubi e vá em \"Colaboradores > Rescisões > Calcular\".\n2. Preencha as informações necessárias, como o tipo de colaborador, a matrícula do colaborador a ser desligado, a data da demissão, a causa da demissão, entre outras.\n3. Selecione o motivo \"Pedido de Demissão\" na ficha complementar.\n4. Clique em \"Calcular\" e analise cada aba com seus eventos de proventos e descontos, verificando se estão corretos e de acordo com o motivo da rescisão.\n5. Salve os documentos na ficha complementar conforme o tipo de rescisão.\n\nLembre-se de que é importante conferir todas as informações com cuidado antes de salvar os documentos na ficha complementar. Se tiver dúvidas em relação a algum passo, consulte o documento \"Cálculo de Rescisão\" que foi enviado para você."
+          },
+          {
+            "role": "user",
+            "content": "qual é o passo a passo do processo de rescisão que é feito na unimed?"
+          },
+          {
+            "role": "assistant",
+            "content": "O processo de rescisão na Unimed segue os seguintes passos:\n\n1. Acesse o site da Unimed (https://sw.joinville.unimedsc.com.br/empresa/) e informe o usuário de acesso:\n   - **SC:** `274795 - 01` \n   - **Senha:** `29291981`\n   - **Demais localidades:** `274796 – 01` \n   - **Senha:** `29291981`\n\n2. Clique em \"Movimentação\" (exclusão de beneficiários) > \"Relatório\" – \"Usuários ativos\" (ordenados por nome).\n\n3. Clique em \"Consulta participação ainda não faturado\" (para fins rescisórios) > \"Localizar beneficiário\".\n\n4. Pesquise pela matrícula do colaborador(a), confira o nome e se está como \"Titular\". Se estiver, clique em cima do nome para abrir a tela de bloqueio.\n\n5. Após receber o relatório, salve na pasta como `746 - Unimed Total RCT`.\n\n6. Caso o colaborador não tenha Unimed, dê print da pesquisa e salve na pasta as duas"
+          },
+          {
+            "role": "user",
+            "content": "como solicitar a carta?"
+          },
+          {
+            "role": "assistant",
+            "content": "Para solicitar uma carta, siga os passos abaixo:\n\n1. Acesse a Intranet da empresa através do link: http://10.0.0.16/index.php?pag=perfil/assinatura_new.php&idx=T\n2. Informe a matrícula e a senha (convênio) para acessar a página.\n3. Navegue até a seção \"Consultas\" e verifique se há restrições na conta do colaborador.\n4. Se houver restrições, registre a restrição e siga os procedimentos necessários para resolução.\n5. Após verificar a situação, acesse a opção \"Envio de Cartas\".\n6. Preencha os dados do colaborador e selecione a filial de destino.\n7. Anexe a carta em formato PDF.\n8. Clique em \"Enviar\" para concluir o processo.\n\nLembre-se de que as cartas devem ser enviadas apenas durante o horário comercial e que, caso a filial não receba a carta em até 5 dias úteis, é necessário entrar em contato com o setor responsável para verificar a situação. Se tiver"
+          },
+          {
+            "role": "user",
+            "content": "Cargo - atendente: como solicitar a carta?"
+          },
+          {
+            "role": "assistant",
+            "content": "Desculpe, mas a solicitação de carta é um processo interno da empresa CLAMED e só pode ser feita por colaboradores autorizados. Como atendente, você não tem acesso a essa função. Se você precisar de uma carta, por favor, entre em contato com o setor responsável para solicitar a ajuda necessária. Posso ajudá-lo em mais alguma coisa?"
+          }
+        ],
+        "chat_input": "Cargo - atendente: como solicitar a carta?"
+      }
+    }
+  ],
+  "prompty_chat_list": [],
+  "init": {
+    "flow.flex.yaml": {}
+  }
+}
