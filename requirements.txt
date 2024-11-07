@@ -9,5 +9,3 @@ jinja2
 aiohttp
 python-dotenv
 flask-cors
-quart
-quart-cors

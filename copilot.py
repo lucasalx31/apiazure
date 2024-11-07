@@ -1,5 +1,4 @@
 import os
-import asyncio
 from dotenv import load_dotenv
 from promptflow.core import Prompty, AzureOpenAIModelConfiguration
 from promptflow.tracing import trace
@@ -11,9 +10,9 @@ load_dotenv()
 
 # <get_documents>
 @trace
-async def get_documents(search_query: str, num_docs=3):
-    from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
-    from azure.search.documents.aio import SearchClient
+def get_documents(search_query: str, num_docs=3):
+    from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+    from azure.search.documents import SearchClient
     from azure.search.documents.models import VectorizedQuery
 
     token_provider = get_bearer_token_provider(
@@ -36,7 +35,7 @@ async def get_documents(search_query: str, num_docs=3):
     )
 
     # Generate a vector embedding of the user's question
-    embedding = await aoai_client.embeddings.create(
+    embedding = aoai_client.embeddings.create(
         input=search_query, model=os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT")
     )
     embedding_to_query = embedding.data[0].embedding
@@ -46,15 +45,12 @@ async def get_documents(search_query: str, num_docs=3):
     vector_query = VectorizedQuery(
         vector=embedding_to_query, k_nearest_neighbors=num_docs, fields="contentVector"
     )
-    results = await trace(search_client.search)(
+    results = trace(search_client.search)(
         search_text="", vector_queries=[vector_query], select=["id", "content"]
     )
 
-    async for result in results:
+    for result in results:
         context += f"\n>>> From: {result['id']}\n{result['content']}"
-
-    await search_client.close()
-    await aoai_client.close()
 
     return context
 
@@ -64,7 +60,7 @@ class ChatResponse(TypedDict):
     context: dict
     reply: str
 
-async def get_chat_response(chat_input: str, chat_history: list = []) -> ChatResponse:
+def get_chat_response(chat_input: str, chat_history: list = []) -> ChatResponse:
     model_config = AzureOpenAIModelConfiguration(
         azure_deployment=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
         api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
@@ -74,8 +70,9 @@ async def get_chat_response(chat_input: str, chat_history: list = []) -> ChatRes
     searchQuery = chat_input
 
     # Only extract intent if there is chat_history
-    if chat_history:
-        path_to_prompty = f"{Path(__file__).parent.absolute().as_posix()}/queryIntent.prompty"
+    if len(chat_history) > 0:
+        # Extract current query intent given chat_history
+        path_to_prompty = f"{Path(__file__).parent.absolute().as_posix()}/queryIntent.prompty"  # Pass absolute file path to prompty
         intentPrompty = Prompty.load(
             path_to_prompty,
             model={
@@ -85,10 +82,10 @@ async def get_chat_response(chat_input: str, chat_history: list = []) -> ChatRes
                 },
             },
         )
-        searchQuery = await intentPrompty(query=chat_input, chat_history=chat_history)
+        searchQuery = intentPrompty(query=chat_input, chat_history=chat_history)
 
     # Retrieve relevant documents and context given chat_history and current user query (chat_input)
-    documents = await get_documents(searchQuery, 3)
+    documents = get_documents(searchQuery, 3)
 
     # Send query + document context to chat completion for a response
     path_to_prompty = f"{Path(__file__).parent.absolute().as_posix()}/chat.prompty"
@@ -99,7 +96,7 @@ async def get_chat_response(chat_input: str, chat_history: list = []) -> ChatRes
             "parameters": {"max_tokens": 450, "temperature": 0.2},
         },
     )
-    result = await chatPrompty(
+    result = chatPrompty(
         chat_history=chat_history, chat_input=chat_input, documents=documents
     )
 
