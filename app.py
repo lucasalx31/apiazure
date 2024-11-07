@@ -4,10 +4,14 @@ from collections import defaultdict
 from dotenv import load_dotenv
 from promptflow.core import Prompty, AzureOpenAIModelConfiguration
 from copilot import get_chat_response  # Ajuste conforme o nome do seu arquivo
+from flask_cors import CORS  # Importando CORS
 
 load_dotenv()
 
 app = Flask(__name__)
+
+# Habilitando CORS para todas as rotas
+CORS(app)
 
 # Dicionário para armazenar o histórico de cada usuário
 user_history = defaultdict(list)
